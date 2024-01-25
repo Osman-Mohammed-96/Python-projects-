@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mupkins E-commerce</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8; /* Light Gray Background Color */
+        }
+
+        header {
+            background-color: #3f51b5; /* Indigo Header Color */
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 200px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .cart-container {
+            background-color: #fff; /* White Cart Background Color */
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ececec; /* Light Gray Cart Item Background Color */
+        }
+
+        .cart-item button {
+            background-color: #e57373; /* Pink Button Color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cart-item button:hover {
+            background-color: #d32f2f; /* Dark Pink Button Hover Color */
+        }
+
+        footer {
+            background-color: #3f51b5; /* Indigo Footer Color */
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mupkins E-commerce</h1>
+    </header>
+
+    <div class="product-container">
+        <!-- Product Cards -->
+        <div class="product-card" onclick="addToCart('Product 1', 'Description of Product 1', 19.99)">
+            <img src="smartphone.jpg" alt="Product 1">
+            <h3>Samsung S10</h3>
+            <p>The first fully fledged phone powered by A.I for outstanding performance.</p>
+            <p>Price: $499.99</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product-card" onclick="addToCart('Product 2', 'Description of Product 2', 29.99)">
+            <img src="earphones.jpg" alt="Product 2">
+            <h3>Apple airpods max</h3>
+            <p>The latest wirless earphones that can be connected to your device from anywhere.</p>
+            <p>Price: $29.99</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product-card" onclick="addToCart('Product 3', 'Description of Product 3', 39.99)">
+            <img src="laptop.jpg .jpg" alt="Product 3">
+            <h3>Dell Laptop</h3>
+            <p>An amazing laptop with 1tb of storage, great for those gamers and everyday use.</p>
+            <p>Price: $539.99</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <!-- Add more product cards as needed -->
+
+    </div>
+
+    <div class="cart-container">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-list"></ul>
+        <p>Total: $<span id="cart-total">0.00</span></p>
+    </div>
+
+    <footer>
+        &copy; 2024 Mupkins E-commerce. All rights reserved.
+    </footer>
+
+    <script>
+        // JavaScript to handle shopping cart functionality
+        const cart = [];
+        
+        function addToCart(productName, productDescription, price) {
+            cart.push({ productName, productDescription, price });
+            updateCartDisplay();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cart-list');
+            const cartTotal = document.getElementById('cart-total');
+            let total = 0;
+
+            // Clear previous cart items
+            cartList.innerHTML = '';
+
+            // Display updated cart items
+            cart.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('cart-item');
+                listItem.innerHTML = `
+                    <span>${item.productName} - $${item.price.toFixed(2)}</span>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                `;
+                cartList.appendChild(listItem);
+                total += item.price;
+            });
+
+            // Update total amount
+            cartTotal.textContent = total.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
